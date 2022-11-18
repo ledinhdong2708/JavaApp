@@ -37,6 +37,9 @@ public class NewTripFragment extends Fragment {
         Button btnCreateTrip = view.findViewById(R.id.btnCreateTrip);
         btnCreateTrip.setOnClickListener(v -> addTrip());
 
+        //Button btnCreateExpense = view.findViewById(R.id.btnCreateExpense);
+        //btnCreateExpense.setOnClickListener(v -> addExpense());
+
         connectionClass();
 
         return view;
@@ -48,6 +51,7 @@ public class NewTripFragment extends Fragment {
         binding = null;
     }
 
+//    ADD TRIP
     public void addTrip(){
         EditText etTripName = getView().findViewById(R.id.etTripName);
         EditText etDetination = getView().findViewById(R.id.etDetination);
@@ -86,7 +90,7 @@ public class NewTripFragment extends Fragment {
                     String sqlScript = "INSERT INTO Trip VALUES (1,'"+
                             tripName + "', '" +
                             destination + "','" +
-                            date + "','" + // Chua fix
+                            date + "','" +
                             description + "','" +
                             location + "','" +
                             status + "','" +
@@ -98,7 +102,6 @@ public class NewTripFragment extends Fragment {
             } catch (Exception e ){
                 Toast.makeText(getActivity(), "Add failure !", Toast.LENGTH_SHORT).show();
             }
-
 //            Map<String, Object> trip = new HashMap<>();
 //            trip.put("tripName", tripName);
 //            trip.put("destination", destination);
@@ -116,8 +119,57 @@ public class NewTripFragment extends Fragment {
 //                            Toast.makeText(getActivity(), "Add failure !!", Toast.LENGTH_SHORT).show()
 //                    );
         }
-
     }
+
+
+//    public void addExpense(){
+//        EditText etType = getView().findViewById(R.id.etType);
+//        EditText etAmount = getView().findViewById(R.id.etAmount);
+//        EditText etTime = getView().findViewById(R.id.etTime);
+//        EditText etComment = getView().findViewById(R.id.etComment);
+//        EditText etTripId = getView().findViewById(R.id.etComment);
+//
+//        String type = etType.getText().toString();
+//        String amount = etAmount.getText().toString();
+//        String time = etTime.getText().toString();
+//        String comment = etComment.getText().toString();
+//        String tripId = etTripId.getText().toString();
+//
+//        Date dt = new Date();
+//        assert dt != null;
+//
+//        try {
+//            dt=new SimpleDateFormat("dd/MM/yyyy").parse(time);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if(type.isEmpty()){
+//            Toast.makeText(getActivity(), "Type can not be null !!", Toast.LENGTH_SHORT).show();
+//        } else if (amount.isEmpty()){
+//            Toast.makeText(getActivity(), "Amount can not be null !!", Toast.LENGTH_SHORT).show();
+//        } else if (time.isEmpty()){
+//            Toast.makeText(getActivity(), "Time can not be null", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Connection connection = connectionClass();
+//            try{
+//                if (connection != null) {
+//                    String sqlScript = "INSERT INTO Expense VALUES (1,'"+
+//                            type + "', " +
+//                            amount + ",'" +
+//                            time + "','" +
+//                            comment + "','" +
+//                            tripId + "')";
+//                    Statement st = connection.createStatement();
+//                    st.executeQuery(sqlScript);
+//                    Toast.makeText(getActivity(), "Add expense successful !", Toast.LENGTH_SHORT).show();
+//                }
+//            } catch (Exception e ){
+//                Toast.makeText(getActivity(), "Add expense failure !", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
+
     @SuppressLint("NewApi")
     public Connection connectionClass() {
         Connection con = null;
@@ -128,10 +180,8 @@ public class NewTripFragment extends Fragment {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
             String connectionUrl = "jdbc:jtds:sqlserver://" + ip + ":" + port + ";databasename=" + database + ";user=" + username + ";password=" + password + ";";
             con = DriverManager.getConnection(connectionUrl);
-            Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
         } catch (Exception exception) {
             Log.e("Error", exception.getMessage());
-            Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show();
         }
         return con;
     }
